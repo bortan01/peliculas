@@ -16,8 +16,9 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: new Container(
+        color: Colors.greenAccent,
         child: new Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[_swiperTarjetas(), _footer(context)],
         ),
       ),
