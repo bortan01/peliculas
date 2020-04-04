@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/providers/peliculas_provider.dart';
 import 'package:peliculas/src/widget/card_swiper_widget.dart';
+import 'package:peliculas/src/widget/movie_horizontal.dart';
 
 class HomePage extends StatelessWidget {
   PeliculaProvider peliculaProvider = new PeliculaProvider();
@@ -16,9 +17,8 @@ class HomePage extends StatelessWidget {
       ),
       body: new Container(
         child: new Column(
-          children: <Widget>[
-            _swiperTarjetas(),
-          ],
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[_swiperTarjetas(), _footer(context)],
         ),
       ),
     );
@@ -33,12 +33,46 @@ class HomePage extends StatelessWidget {
             return new CardSwiper(peliculas: snapshot.data);
           } else {
             return Container(
-              height: 400.0,
-                child: Center(
-                    child: new CircularProgressIndicator()
-                )
-            );
+                height: 400.0,
+                child: Center(child: new CircularProgressIndicator()));
           }
         });
+  }
+
+  Widget _footer(BuildContext context) {
+    PeliculaProvider p = new PeliculaProvider();
+    p.getPopulares();
+
+    return new Container(
+      ///para que tome todo el espacio
+      width: double.infinity,
+
+      child: new Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            child: new Text("populares",
+                style: Theme.of(context).textTheme.subhead),
+            padding: EdgeInsets.only(left: 25.0),
+          ),
+          new SizedBox(
+            height: 5.0,
+          ),
+          new FutureBuilder(
+              future: peliculaProvider.getPopulares(),
+              builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+                if (snapshot.hasData) {
+                  if (snapshot.data != null) {
+                    return new MovieHorizontal(peliculas: snapshot.data);
+                  } else {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                } else {
+                  return new Container();
+                }
+              }),
+        ],
+      ),
+    );
   }
 }

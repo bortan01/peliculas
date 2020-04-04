@@ -17,25 +17,18 @@ class CardSwiper extends StatelessWidget {
         layout: SwiperLayout.STACK,
         itemWidth: tamanioPantalla.width * 0.7,
         itemHeight: tamanioPantalla.height * 0.5,
-        itemBuilder: (BuildContext context, int index){
-
-
-
+        itemBuilder: (BuildContext context, int index) {
           return Container(
-
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
                 child: GestureDetector(
-
                   child: FadeInImage(
-                    image: NetworkImage( peliculas[index].getPosterImg()  ),
+                    image: NetworkImage(peliculas[index].getPosterImg()),
                     placeholder: AssetImage('assets/img/no-image.jpg'),
                     fit: BoxFit.cover,
                   ),
-                )
-            ),
+                )),
           );
-
         },
         itemCount: peliculas.length,
         // pagination: new SwiperPagination(),
