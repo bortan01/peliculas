@@ -42,8 +42,8 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _footer(BuildContext context) {
-    PeliculaProvider p = new PeliculaProvider();
-    p.getPopulares();
+   // PeliculaProvider p = new PeliculaProvider();
+   // p.getPopulares();
 
     return new Container(
       ///para que tome todo el espacio

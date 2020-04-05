@@ -9,6 +9,7 @@ class PeliculaProvider {
   String _url = "api.themoviedb.org";
   String _languaje = "es-ES";
   int _populares_page = 0;
+  bool _cargando = false;
   List<Pelicula> _populares = new List();
 
   /// el list de peliculas hace referencia a que va a fluir al interior del stream
@@ -37,7 +38,12 @@ class PeliculaProvider {
   }
 
   Future<List<Pelicula>> getPopulares() async {
+    if(_cargando){
+      return [];
+    }
+    _cargando =true;
     _populares_page++;
+    print('cargando siguientes');
     final url = Uri.https(_url, '3/movie/popular', {
       'api_key': _apikey,
       'language': _languaje,
@@ -47,6 +53,7 @@ class PeliculaProvider {
 
     _populares.addAll(resultado);
     popularesSink(_populares);
+    _cargando= false;
     return resultado;
   }
 

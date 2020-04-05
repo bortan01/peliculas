@@ -6,7 +6,8 @@ class MovieHorizontal extends StatelessWidget {
   final Function siguientePagina;
 
   MovieHorizontal({@required this.peliculas, @required this.siguientePagina});
-  final _pageController = new PageController(initialPage: 1, viewportFraction: 0.3);
+  final _pageController =
+      new PageController(initialPage: 1, viewportFraction: 0.3);
 
   @override
   Widget build(BuildContext context) {
@@ -14,17 +15,23 @@ class MovieHorizontal extends StatelessWidget {
 
     /// este metodo se dispara cada vez que se mueve el scroll horizontal
     _pageController.addListener(() {
-      if (_pageController.position.pixels >= _pageController.position.maxScrollExtent -200) {
+      if (_pageController.position.pixels >=
+          _pageController.position.maxScrollExtent - 200) {
         siguientePagina();
       }
     });
 
     return Container(
       height: _scrimSize.height * 0.33,
-      child: new PageView(
+      child: new PageView.builder(
         pageSnapping: false,
         controller: _pageController,
-        children: _tarjetas(),
+        //es necesario este parametro
+        itemCount: peliculas.length,
+        // children: _tarjetas(),
+        itemBuilder: (context, i) {
+          return _crearTarjeta(context, peliculas[i]);
+        },
       ),
     );
   }
@@ -55,5 +62,30 @@ class MovieHorizontal extends StatelessWidget {
         ),
       );
     }).toList();
+  }
+
+  Widget _crearTarjeta(BuildContext context, Pelicula peli) {
+    return new Container(
+      color: Colors.red,
+      margin: const EdgeInsets.only(right: 15.0),
+      child: new Column(
+        children: <Widget>[
+          ClipRRect(
+            child: new FadeInImage(
+                placeholder: AssetImage('assets/img/no-image.jpg'),
+                fit: BoxFit.cover,
+                height: 200.0,
+                image: NetworkImage(
+                  peli.getPosterImg(),
+                )),
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          new Text(
+            peli.title,
+            overflow: TextOverflow.ellipsis,
+          )
+        ],
+      ),
+    );
   }
 }
