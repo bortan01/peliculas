@@ -43,7 +43,7 @@ class PeliculaProvider {
     }
     _cargando =true;
     _populares_page++;
-    print('cargando siguientes');
+    print('cargando siguientes......');
     final url = Uri.https(_url, '3/movie/popular', {
       'api_key': _apikey,
       'language': _languaje,
