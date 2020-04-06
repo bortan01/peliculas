@@ -40,7 +40,7 @@ class PeliculaDetalle extends StatelessWidget {
           pelicula.title,
           style: TextStyle(color: Colors.white, fontSize: 16.0),
         ),
-        
+
         background: FadeInImage(
           image: NetworkImage(pelicula.getBackgroudImage()),
           placeholder: AssetImage('assets/img/loading.gif'),
