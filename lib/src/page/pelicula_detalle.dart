@@ -134,6 +134,7 @@ class PeliculaDetalle extends StatelessWidget {
         itemCount: actores.length,
         controller: new PageController(
           viewportFraction: 0.3,
+          initialPage: 1
         ),
         itemBuilder: (context, i) {
           return _actorTarjeta(actores[i]);

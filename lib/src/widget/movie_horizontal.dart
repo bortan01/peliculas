@@ -30,6 +30,7 @@ class MovieHorizontal extends StatelessWidget {
         itemCount: peliculas.length,
         // children: _tarjetas(),
         itemBuilder: (context, i) {
+
           return _crearTarjeta(context, peliculas[i]);
         },
       ),

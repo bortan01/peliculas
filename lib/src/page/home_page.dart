@@ -19,8 +19,11 @@ class HomePage extends StatelessWidget {
       body: new Container(
         color: Colors.greenAccent,
         child: new Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[_swiperTarjetas(), _footer(context)],
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            _swiperTarjetas(),
+            _footer(context)
+          ],
         ),
       ),
     );
@@ -50,7 +53,7 @@ class HomePage extends StatelessWidget {
       width: double.infinity,
 
       child: new Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+       // crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
             child: new Text("populares",
@@ -63,9 +66,12 @@ class HomePage extends StatelessWidget {
           new StreamBuilder(
               stream: peliculaProvider.popularesStream,
               builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+
                 if (snapshot.hasData) {
                   if (snapshot.data != null) {
-                    return new MovieHorizontal(peliculas: snapshot.data, siguientePagina: peliculaProvider.getPopulares, );
+                    return new MovieHorizontal(
+                      peliculas: snapshot.data,
+                      siguientePagina: peliculaProvider.getPopulares, );
                   } else {
                     return Center(child: CircularProgressIndicator());
                   }
