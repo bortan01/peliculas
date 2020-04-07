@@ -21,7 +21,6 @@ class PeliculaDetalle extends StatelessWidget {
               _descripcion(pelicula),
               _descripcion(pelicula),
               _descripcion(pelicula),
-
               _crearCasting(pelicula)
             ]))
           ],
@@ -31,15 +30,20 @@ class PeliculaDetalle extends StatelessWidget {
   Widget _crearAppbar(Pelicula pelicula) {
     return SliverAppBar(
       elevation: 2.0,
-      backgroundColor: Colors.indigoAccent,
+      backgroundColor: Colors.black54,
       expandedHeight: 200.0,
       floating: false,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
+        titlePadding:   EdgeInsets.symmetric(horizontal: 40.0 , vertical: 20.0),
         centerTitle: true,
-        title: Text(
-          pelicula.title,
-          style: TextStyle(color: Colors.white, fontSize: 16.0),
+        title: Container(
+          padding: EdgeInsets.symmetric(horizontal: 40.0 , vertical: 20.0),
+          child: Text(
+            pelicula.title,
+            style: TextStyle(color: Colors.white, fontSize: 16.0),
+          //  overflow: TextOverflow.ellipsis,
+          ),
         ),
         background: FadeInImage(
           image: NetworkImage(pelicula.getBackgroudImage()),
@@ -57,12 +61,16 @@ class PeliculaDetalle extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20.0),
       child: Row(
         children: <Widget>[
-          ClipRRect(
-            child: new Image(
-              image: NetworkImage(pelicula.getPosterImg()),
-              height: 150,
+          
+          Hero(
+            child: ClipRRect(
+              child: new Image(
+                image: NetworkImage(pelicula.getPosterImg()),
+                height: 150,
+              ),
+              borderRadius: new BorderRadius.circular(20.0),
             ),
-            borderRadius: new BorderRadius.circular(20.0),
+            tag: pelicula.id,
           ),
           new SizedBox(
             width: 20.0,
@@ -71,11 +79,15 @@ class PeliculaDetalle extends StatelessWidget {
               child: new Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              new Text(
-                pelicula.title,
-                style: Theme.of(context).textTheme.title,
-                overflow:
-                    TextOverflow.ellipsis, //por si el titulo es muy grande
+              Container(
+
+                child: new Text(
+                  pelicula.title,
+                  style: Theme.of(context).textTheme.title,
+                  overflow:
+                      TextOverflow.ellipsis, //por si el titulo es muy grande
+                ),
+
               ),
               new Text(pelicula.originalTitle,
                   style: Theme.of(context).textTheme.subtitle,
@@ -126,23 +138,21 @@ class PeliculaDetalle extends StatelessWidget {
         });
   }
 
- Widget _crearActoresView(List<Actor> actores) {
+  Widget _crearActoresView(List<Actor> actores) {
     return SizedBox(
       height: 200.0,
       child: new PageView.builder(
         pageSnapping: false,
         itemCount: actores.length,
-        controller: new PageController(
-          viewportFraction: 0.3,
-          initialPage: 1
-        ),
+        controller: new PageController(viewportFraction: 0.3, initialPage: 1),
         itemBuilder: (context, i) {
           return _actorTarjeta(actores[i]);
         },
       ),
     );
   }
-  Widget _actorTarjeta (Actor actor){
+
+  Widget _actorTarjeta(Actor actor) {
     return new Container(
       color: Colors.yellowAccent,
       child: new Column(
@@ -150,19 +160,19 @@ class PeliculaDetalle extends StatelessWidget {
         children: <Widget>[
           ClipRRect(
             child: FadeInImage(
-              image:  new NetworkImage(actor.getFoto()),
+              image: new NetworkImage(actor.getFoto()),
               placeholder: AssetImage('assets/img/no-image.jpg'),
               height: 150.0,
-               fit: BoxFit.cover,
+              fit: BoxFit.cover,
             ),
             borderRadius: BorderRadius.circular(20.0),
-
           ),
-          new Text(actor.name, overflow: TextOverflow.ellipsis,)
-
+          new Text(
+            actor.name,
+            overflow: TextOverflow.ellipsis,
+          )
         ],
       ),
     );
   }
-
 }

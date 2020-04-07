@@ -10,8 +10,9 @@ class HomePage extends StatelessWidget {
     peliculaProvider.getPopulares();
     return Scaffold(
       appBar: new AppBar(
+
         title: new Text("peliculas de cine"),
-        backgroundColor: Colors.indigoAccent,
+        backgroundColor: Colors.deepPurple,
         actions: <Widget>[
           new IconButton(icon: new Icon(Icons.search), onPressed: () {})
         ],

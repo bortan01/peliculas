@@ -30,7 +30,6 @@ class MovieHorizontal extends StatelessWidget {
         itemCount: peliculas.length,
         // children: _tarjetas(),
         itemBuilder: (context, i) {
-
           return _crearTarjeta(context, peliculas[i]);
         },
       ),
@@ -71,15 +70,19 @@ class MovieHorizontal extends StatelessWidget {
       margin: const EdgeInsets.only(right: 15.0),
       child: new Column(
         children: <Widget>[
-          ClipRRect(
-            child: new FadeInImage(
-                placeholder: AssetImage('assets/img/no-image.jpg'),
-                fit: BoxFit.cover,
-                height: 200.0,
-                image: NetworkImage(
-                  peli.getPosterImg(),
-                )),
-            borderRadius: BorderRadius.circular(20.0),
+          Hero(
+            child: ClipRRect(
+              child: new FadeInImage(
+                  placeholder: AssetImage('assets/img/no-image.jpg'),
+                  fit: BoxFit.cover,
+                  height: 200.0,
+                  image: NetworkImage(
+                    peli.getPosterImg(),
+                  )),
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            tag: peli.id,
+            transitionOnUserGestures: false,
           ),
           new Text(
             peli.title,
@@ -90,12 +93,11 @@ class MovieHorizontal extends StatelessWidget {
     );
 
     return new GestureDetector(
-      onTap: (){
-       // print('nombre de la pelicula ${peli.toString()}');
-        Navigator.pushNamed(context, 'detalle' , arguments: peli);
+      onTap: () {
+        // print('nombre de la pelicula ${peli.toString()}');
+        Navigator.pushNamed(context, 'detalle', arguments: peli);
       },
       child: tarjeta,
     );
-
   }
 }
