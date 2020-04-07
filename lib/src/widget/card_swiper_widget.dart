@@ -19,16 +19,28 @@ class CardSwiper extends StatelessWidget {
         itemWidth: tamanioPantalla.width * 0.8,
         itemHeight: tamanioPantalla.height * 0.5,
         itemBuilder: (BuildContext context, int index) {
+          peliculas[index].uniqueId = '${peliculas[index].id}-tarjeta';
           return Container(
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(20.0),
-                child: GestureDetector(
-                  child: FadeInImage(
-                    image: NetworkImage(peliculas[index].getPosterImg()),
-                    placeholder: AssetImage('assets/img/no-image.jpg'),
-                    fit: BoxFit.cover,
-                  ),
-                )),
+            child: Hero(
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20.0),
+                  child: GestureDetector(
+                    child: GestureDetector(
+                      onTap: (){
+                        final peli = peliculas[index];
+
+                        Navigator.pushNamed(context, 'detalle', arguments: peli);
+                      },
+                      child: FadeInImage(
+                        image: NetworkImage(peliculas[index].getPosterImg()),
+                        placeholder: AssetImage('assets/img/no-image.jpg'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  )
+              ),
+            tag: peliculas[index].uniqueId,
+            ),
           );
         },
         itemCount: peliculas.length,

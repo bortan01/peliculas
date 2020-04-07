@@ -65,6 +65,7 @@ class MovieHorizontal extends StatelessWidget {
   }
 
   Widget _crearTarjeta(BuildContext context, Pelicula peli) {
+    peli.uniqueId = '${peli.id}-poster';
     final tarjeta = new Container(
       color: Colors.red,
       margin: const EdgeInsets.only(right: 15.0),
@@ -81,7 +82,7 @@ class MovieHorizontal extends StatelessWidget {
                   )),
               borderRadius: BorderRadius.circular(20.0),
             ),
-            tag: peli.id,
+            tag: peli.uniqueId,
             transitionOnUserGestures: false,
           ),
           new Text(

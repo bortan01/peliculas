@@ -61,7 +61,7 @@ class PeliculaDetalle extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20.0),
       child: Row(
         children: <Widget>[
-          
+
           Hero(
             child: ClipRRect(
               child: new Image(
@@ -70,7 +70,7 @@ class PeliculaDetalle extends StatelessWidget {
               ),
               borderRadius: new BorderRadius.circular(20.0),
             ),
-            tag: pelicula.id,
+            tag: pelicula.uniqueId,
           ),
           new SizedBox(
             width: 20.0,
