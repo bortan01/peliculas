@@ -69,18 +69,17 @@ class PeliculaProvider {
   }
 
   Future<List<Actor>> getCast(String peliId) async{
-    final url =  Uri.https(_url, '/3/movie/{$peliId}/credits',{
-      'api_key': _apikey,
-      'language': _languaje,
-
+    final url = Uri.https(_url, '3/movie/$peliId/credits', {
+      'api_key'  : _apikey,
+      'language' : _languaje
     });
 
-    final respuesta = await http.get(url);
-    final decodeData = json.decode(respuesta.body);
+    final resp = await http.get(url);
+    final decodedData = json.decode( resp.body );
 
-    final casting = new Cast.fromJsonList(decodeData['cast']);
+    final cast = new Cast.fromJsonList(decodedData['cast']);
 
-    return casting.actores;
+    return cast.actores;
 
   }
 

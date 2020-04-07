@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/actores_models.dart';
 import 'package:peliculas/src/models/pelicula_models.dart';
+import 'package:peliculas/src/providers/peliculas_provider.dart';
 
 class PeliculaDetalle extends StatelessWidget {
   @override
@@ -19,9 +21,8 @@ class PeliculaDetalle extends StatelessWidget {
               _descripcion(pelicula),
               _descripcion(pelicula),
               _descripcion(pelicula),
-              _descripcion(pelicula),
-              _descripcion(pelicula),
-              _descripcion(pelicula),
+
+              _crearCasting(pelicula)
             ]))
           ],
         ));
@@ -40,7 +41,6 @@ class PeliculaDetalle extends StatelessWidget {
           pelicula.title,
           style: TextStyle(color: Colors.white, fontSize: 16.0),
         ),
-
         background: FadeInImage(
           image: NetworkImage(pelicula.getBackgroudImage()),
           placeholder: AssetImage('assets/img/loading.gif'),
@@ -54,7 +54,6 @@ class PeliculaDetalle extends StatelessWidget {
   _posterTitulo(Pelicula pelicula, BuildContext context) {
     print(pelicula.originalTitle);
     return new Container(
-
       padding: EdgeInsets.symmetric(horizontal: 20.0),
       child: Row(
         children: <Widget>[
@@ -106,4 +105,63 @@ class PeliculaDetalle extends StatelessWidget {
       ),
     );
   }
+
+  /// poner una } al final del ultimo else y colocar <List> antes de snapshot
+  /// y agregar un ultimo else con con indicator
+  _crearCasting(Pelicula pelicula) {
+    PeliculaProvider peli = new PeliculaProvider();
+
+    return new FutureBuilder(
+        future: peli.getCast(pelicula.id.toString()),
+        builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data != null) {
+              return _crearActoresView(snapshot.data);
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        });
+  }
+
+ Widget _crearActoresView(List<Actor> actores) {
+    return SizedBox(
+      height: 200.0,
+      child: new PageView.builder(
+        pageSnapping: false,
+        itemCount: actores.length,
+        controller: new PageController(
+          viewportFraction: 0.3,
+        ),
+        itemBuilder: (context, i) {
+          return _actorTarjeta(actores[i]);
+        },
+      ),
+    );
+  }
+  Widget _actorTarjeta (Actor actor){
+    return new Container(
+      color: Colors.yellowAccent,
+      child: new Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          ClipRRect(
+            child: FadeInImage(
+              image:  new NetworkImage(actor.getFoto()),
+              placeholder: AssetImage('assets/img/no-image.jpg'),
+              height: 150.0,
+               fit: BoxFit.cover,
+            ),
+            borderRadius: BorderRadius.circular(20.0),
+
+          ),
+          new Text(actor.name, overflow: TextOverflow.ellipsis,)
+
+        ],
+      ),
+    );
+  }
+
 }
